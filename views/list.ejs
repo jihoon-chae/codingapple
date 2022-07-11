@@ -91,24 +91,29 @@
     <ul class="list-group">
       <% for (var i = 0; i < posts.length; i ++) { %>
       <li class="list-group-item">
-        <h4><%= posts[i].제목 %></h4>
-        <p><%= posts[i].날짜 %></p>
-        <button>삭제</button>
+        <p>글번호 : <%= posts[i]._id %></p>
+        <h4>할일 제목 : <%= posts[i].제목 %></h4>
+        <p>할일 마감날짜 : <%= posts[i].날짜 %></p>
+        <button class="delete" data-id=" <%= posts[i]._id %>">삭제</button>
+        <!-- data-id 속성에 _id룰 숨겨주세요 -->
       </li>
       <% } %>
     </ul>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-      $.ajax({
-        method : 'DELETE',
-        url : '/delete',
-        data : '게시물번호' // 요청보낼때 함께 딸려오는 데이터
-      }).done(function(결과) { // 성공하면 함수 실행해 주세요
-
-      })
+    <script>
+      $(".delete").click(function (e) {
+        // 삭제 버튼 클릭하면 AJAX요청 해주세요
+        var 글번호 = e.target.dataset.id; // 내가 누른요소의 숨겨진 data-id를 가져와 주세요
+        $.ajax({
+          method: "DELETE",
+          url: "/delete",
+          data: { _id: 글번호 },
+        }).done(function (결과) {
+          // 성공하면 함수 실행해 주세요
+        });
+      });
     </script>
-
-    <script></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
