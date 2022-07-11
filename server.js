@@ -58,14 +58,23 @@ app.get("/write", function (요청, 응답) {
 app.post("/add", function (요청, 응답) {
   // add경로로 POST 요청을 하면 ~을 해주세요
   응답.send("전송완료");
-  console.log(요청.body.date);
-  console.log(요청.body.title); //요청.body는 폼에 입력한 제목과 날짜 데이터
-  db.collection("post").insertOne(
-    { 제목: 요청.body.title, 날짜: 요청.body.date },
+  db.collection("counter").findOne(
+    // name이 게시물개수인것만 집어라
+    { name: "게시물개수" },
     function (에러, 결과) {
-      console.log("저장완료"); // post에 데이터 저장하기
+      console.log(결과.totalPost);
+      var 총게시물개수 = 결과.totalPost;
+
+      db.collection("post").insertOne(
+        { _id: 총게시물개수 + 1, 제목: 요청.body.title, 날짜: 요청.body.date },
+        function (에러, 결과) {
+          console.log("저장완료"); // post에 데이터 저장하기
+        }
+      );
     }
   );
+
+
 });
 
 //누가 Get요청으로 /list 접속하면
