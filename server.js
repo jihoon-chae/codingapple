@@ -100,9 +100,9 @@ app.get("/list", function (요청, 응답) {
 
 app.delete("/delete", function (요청, 응답) {
   console.log(요청.body); // 요청시 해당 데이터 출력
-  요청.body._id = parseInt(요청.body._id)
+  요청.body._id = parseInt(요청.body._id);
   db.collection("post").deleteOne(요청.body, function (에러, 결과) {
     console.log("삭제완료");
+    응답.status(200).send({ message: "성공했습니다" });
   }); // 원하는 게시물 삭제(id가 1인 게시물삭제)
-  응답.send("삭제완료");
 });
