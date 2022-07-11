@@ -8,10 +8,18 @@ app.use(bodyParser.urlencoded({ extended: true })); // bodyParser라이브러리
 const MongoClient = require("mongodb").MongoClient;
 
 MongoClient.connect(
-  "mongodb+srv://hoonn:1234@cluster0.8me9d.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://hoonn:wlgns1994@cluster0.8me9d.mongodb.net/?retryWrites=true&w=majority", // url에 DB계정아이디 : 패스워드 /데이터베이스 이름 쓸것!
   function (에러, client) {
     if (에러) return console.log(에러);
     //서버띄우는 코드 여기로 옮기기
+
+    db = client.db('todoapp') // todoapp 이라는 폴더에 연결
+
+    // db.collection('post').insertOne() //원하는 데이터 저장하기
+
+    db.collection('post').insertOne( {이름 : 'John', _id : 100} , function(에러, 결과){ // 저장할데이터, 콜백함수
+	    console.log('저장완료');
+	});
     app.listen("8080", function () {
       console.log("listening on 8080");
     });
