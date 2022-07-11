@@ -59,7 +59,7 @@ app.post("/add", function (요청, 응답) {
   // add경로로 POST 요청을 하면 ~을 해주세요
   응답.send("전송완료");
   db.collection("counter").findOne(
-    // name이 게시물개수인것만 집어라
+    // name이 게시물개수인것만 찾아라
     { name: "게시물개수" },
     function (에러, 결과) {
       console.log(결과.totalPost);
@@ -69,12 +69,20 @@ app.post("/add", function (요청, 응답) {
         { _id: 총게시물개수 + 1, 제목: 요청.body.title, 날짜: 요청.body.date },
         function (에러, 결과) {
           console.log("저장완료"); // post에 데이터 저장하기
+
+          db.collection("counter").updateOne(
+            { name: "게시물개수" },
+            { $inc: { totalPost: 1 } },
+            function (에러, 결과) {
+              if (에러) {
+                return console.log(에러);
+              }
+            }
+          ); // 데이터 수정 -> {수정할 데이터}, {수정값} -> $inc => 1만큼 증가시켜줘라
         }
       );
     }
   );
-
-
 });
 
 //누가 Get요청으로 /list 접속하면
