@@ -88,18 +88,30 @@
 
     <!-- ejs파일 안에서 데이터 집어넣기 -->
 
-    <% for (var i = 0; i < posts.length; i ++) { %>
-    <h4><%= posts[i].제목 %></h4>
-    <p><%= posts[i].날짜 %></p>
-    <% } %>
+    <ul class="list-group">
+      <% for (var i = 0; i < posts.length; i ++) { %>
+      <li class="list-group-item">
+        <h4><%= posts[i].제목 %></h4>
+        <p><%= posts[i].날짜 %></p>
+        <button>삭제</button>
+      </li>
+      <% } %>
+    </ul>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 
+      $.ajax({
+        method : 'DELETE',
+        url : '/delete',
+        data : '게시물번호' // 요청보낼때 함께 딸려오는 데이터
+      }).done(function(결과) { // 성공하면 함수 실행해 주세요
+
+      })
+    </script>
+
+    <script></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
